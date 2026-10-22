@@ -1,0 +1,64 @@
+{
+  "_comment": "Synthetic payer configuration for the AuthBridge demo. Criteria are self-authored demo policies that paraphrase public CMS coverage criteria (see shared/seed/policies). Verify CPT/HCPCS/ICD-10 codes against current code sets before any real use.",
+  "payer": { "payer_id": "payer-demo", "name": "Demo Health Plan", "organization_id": "org-demo-health-plan" },
+  "plans": [
+    { "plan_id": "DEMO-MA-01", "payer_id": "payer-demo", "plan_name": "Demo Medicare Advantage HMO", "line_of_business": "MA", "cms_0057_applies": true },
+    { "plan_id": "DEMO-COMM-01", "payer_id": "payer-demo", "plan_name": "Demo Commercial PPO", "line_of_business": "COMMERCIAL", "cms_0057_applies": false }
+  ],
+  "members": [
+    { "member_id": "M100001", "plan_id": "DEMO-MA-01", "patient_id": "pt-001", "eff_start": "2026-01-01", "eff_end": "2026-12-31", "status": "active" },
+    { "member_id": "M100002", "plan_id": "DEMO-MA-01", "patient_id": "pt-002", "eff_start": "2026-01-01", "eff_end": "2026-12-31", "status": "active" },
+    { "member_id": "M100003", "plan_id": "DEMO-MA-01", "patient_id": "pt-003", "eff_start": "2026-01-01", "eff_end": "2026-12-31", "status": "active" },
+    { "member_id": "M100004", "plan_id": "DEMO-MA-01", "patient_id": "pt-004", "eff_start": "2026-01-01", "eff_end": "2026-12-31", "status": "active" },
+    { "member_id": "M100005", "plan_id": "DEMO-COMM-01", "patient_id": "pt-005", "eff_start": "2026-01-01", "eff_end": "2026-12-31", "status": "active" },
+    { "member_id": "M100099", "plan_id": "DEMO-MA-01", "patient_id": "pt-099", "eff_start": "2025-01-01", "eff_end": "2025-12-31", "status": "terminated" }
+  ],
+  "catalog": [
+    { "code": "72148", "code_system": "CPT", "display": "MRI lumbar spine without contrast", "resource_type": "ServiceRequest", "category": "Imaging" },
+    { "code": "72100", "code_system": "CPT", "display": "X-ray lumbar spine, 2 or 3 views", "resource_type": "ServiceRequest", "category": "Imaging" },
+    { "code": "E0601", "code_system": "HCPCS", "display": "CPAP device", "resource_type": "ServiceRequest", "category": "Durable medical equipment" },
+    { "code": "E1390", "code_system": "HCPCS", "display": "Oxygen concentrator", "resource_type": "ServiceRequest", "category": "Durable medical equipment" },
+    { "code": "SEMAGLUTIDE-2.4", "code_system": "DEMO-DRUG", "display": "Semaglutide 2.4 mg weekly injection (demo code)", "resource_type": "MedicationRequest", "category": "Medication" }
+  ],
+  "diagnoses": [
+    { "code": "G47.33", "display": "Obstructive sleep apnea (adult)" },
+    { "code": "M54.16", "display": "Radiculopathy, lumbar region" },
+    { "code": "G83.4", "display": "Cauda equina syndrome" },
+    { "code": "J44.9", "display": "Chronic obstructive pulmonary disease, unspecified" },
+    { "code": "E66.01", "display": "Morbid (severe) obesity due to excess calories" },
+    { "code": "M54.50", "display": "Low back pain, unspecified" }
+  ],
+  "service_pa_rules": [
+    { "rule_id": "R-72148", "plan_id": null, "service_code": "72148", "code_system": "CPT", "description": "MRI lumbar spine without contrast", "pa_required": true, "doc_required": true, "questionnaire_id": "q-mri-lumbar", "policy_doc_id": "POL-DEMO-LSMRI-v1", "gold_card_eligible": true, "expedited_allowed": true, "effective_from": "2026-01-01", "effective_to": null, "version": "1" },
+    { "rule_id": "R-72100", "plan_id": null, "service_code": "72100", "code_system": "CPT", "description": "X-ray lumbar spine", "pa_required": false, "doc_required": false, "questionnaire_id": null, "policy_doc_id": null, "gold_card_eligible": false, "expedited_allowed": false, "effective_from": "2026-01-01", "effective_to": null, "version": "1" },
+    { "rule_id": "R-E0601", "plan_id": null, "service_code": "E0601", "code_system": "HCPCS", "description": "CPAP device", "pa_required": true, "doc_required": true, "questionnaire_id": "q-pap-initial", "policy_doc_id": "POL-DEMO-PAP-v1", "gold_card_eligible": false, "expedited_allowed": false, "effective_from": "2026-01-01", "effective_to": null, "version": "1" },
+    { "rule_id": "R-E1390", "plan_id": null, "service_code": "E1390", "code_system": "HCPCS", "description": "Oxygen concentrator", "pa_required": true, "doc_required": true, "questionnaire_id": "q-home-o2", "policy_doc_id": "POL-DEMO-O2-v1", "gold_card_eligible": false, "expedited_allowed": true, "effective_from": "2026-01-01", "effective_to": null, "version": "1" },
+    { "rule_id": "R-GLP1", "plan_id": null, "service_code": "SEMAGLUTIDE-2.4", "code_system": "DEMO-DRUG", "description": "Semaglutide 2.4 mg (continuation)", "pa_required": true, "doc_required": true, "questionnaire_id": "q-glp1-continuation", "policy_doc_id": "POL-DEMO-GLP1-v1", "gold_card_eligible": false, "expedited_allowed": false, "effective_from": "2026-01-01", "effective_to": null, "version": "1" }
+  ],
+  "policy_criteria": [
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.root", "parent_node_id": null, "node_type": "AND", "label": "CPAP initial coverage criteria", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "PAP-2", "sort_order": 1 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.f2f", "parent_node_id": "pap.root", "node_type": "LEAF", "label": "Face-to-face evaluation before the sleep test", "fact_name": "f2f_before_sleep_test", "operator": "=", "threshold": true, "on_not_met": "PEND", "policy_section_id": "PAP-2.1", "sort_order": 2 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.ahi", "parent_node_id": "pap.root", "node_type": "OR", "label": "Qualifying sleep test result", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "PAP-2.2", "sort_order": 3 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.ahi15", "parent_node_id": "pap.ahi", "node_type": "LEAF", "label": "AHI of 15 or more", "fact_name": "ahi", "operator": ">=", "threshold": 15, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "PAP-2.2", "sort_order": 4 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.ahi5", "parent_node_id": "pap.ahi", "node_type": "AND", "label": "AHI 5–14 with a qualifying symptom", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "PAP-2.3", "sort_order": 5 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.ahi5.v", "parent_node_id": "pap.ahi5", "node_type": "LEAF", "label": "AHI of 5 or more", "fact_name": "ahi", "operator": ">=", "threshold": 5, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "PAP-2.3", "sort_order": 6 },
+    { "policy_doc_id": "POL-DEMO-PAP-v1", "version": "1", "node_id": "pap.ahi5.sx", "parent_node_id": "pap.ahi5", "node_type": "LEAF", "label": "Excessive daytime sleepiness or another qualifying symptom", "fact_name": "qualifying_symptom", "operator": "=", "threshold": true, "on_not_met": "PEND", "policy_section_id": "PAP-2.3", "sort_order": 7 },
+
+    { "policy_doc_id": "POL-DEMO-LSMRI-v1", "version": "1", "node_id": "mri.root", "parent_node_id": null, "node_type": "OR", "label": "Lumbar spine MRI medical necessity", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "MRI-3", "sort_order": 1 },
+    { "policy_doc_id": "POL-DEMO-LSMRI-v1", "version": "1", "node_id": "mri.redflag", "parent_node_id": "mri.root", "node_type": "LEAF", "label": "Red-flag findings present", "fact_name": "red_flag", "operator": "=", "threshold": true, "on_not_met": "PEND", "policy_section_id": "MRI-3.1", "sort_order": 2 },
+    { "policy_doc_id": "POL-DEMO-LSMRI-v1", "version": "1", "node_id": "mri.cons", "parent_node_id": "mri.root", "node_type": "LEAF", "label": "At least 6 weeks of conservative care", "fact_name": "conservative_weeks", "operator": ">=", "threshold": 6, "on_not_met": "PEND", "policy_section_id": "MRI-3.2", "sort_order": 3 },
+
+    { "policy_doc_id": "POL-DEMO-O2-v1", "version": "1", "node_id": "o2.root", "parent_node_id": null, "node_type": "OR", "label": "Qualifying oxygen saturation (any setting)", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "O2-2", "sort_order": 1 },
+    { "policy_doc_id": "POL-DEMO-O2-v1", "version": "1", "node_id": "o2.rest", "parent_node_id": "o2.root", "node_type": "LEAF", "label": "Resting room-air SpO2 of 88% or less", "fact_name": "spo2_rest", "operator": "<=", "threshold": 88, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "O2-2.1", "sort_order": 2 },
+    { "policy_doc_id": "POL-DEMO-O2-v1", "version": "1", "node_id": "o2.ex", "parent_node_id": "o2.root", "node_type": "LEAF", "label": "Exercise SpO2 of 88% or less", "fact_name": "spo2_exercise", "operator": "<=", "threshold": 88, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "O2-2.2", "sort_order": 3 },
+    { "policy_doc_id": "POL-DEMO-O2-v1", "version": "1", "node_id": "o2.sleep", "parent_node_id": "o2.root", "node_type": "LEAF", "label": "Sleep SpO2 of 88% or less", "fact_name": "spo2_sleep", "operator": "<=", "threshold": 88, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "O2-2.3", "sort_order": 4 },
+
+    { "policy_doc_id": "POL-DEMO-GLP1-v1", "version": "1", "node_id": "glp.root", "parent_node_id": null, "node_type": "AND", "label": "GLP-1 continuation criteria", "fact_name": null, "operator": null, "threshold": null, "on_not_met": null, "policy_section_id": "GLP-2", "sort_order": 1 },
+    { "policy_doc_id": "POL-DEMO-GLP1-v1", "version": "1", "node_id": "glp.weeks", "parent_node_id": "glp.root", "node_type": "LEAF", "label": "At least 12 weeks at the maintenance dose", "fact_name": "weeks_at_maintenance", "operator": ">=", "threshold": 12, "on_not_met": "PEND", "policy_section_id": "GLP-2.1", "sort_order": 2 },
+    { "policy_doc_id": "POL-DEMO-GLP1-v1", "version": "1", "node_id": "glp.loss", "parent_node_id": "glp.root", "node_type": "LEAF", "label": "At least 5% weight loss from baseline", "fact_name": "weight_loss_pct", "operator": ">=", "threshold": 5, "on_not_met": "RECOMMEND_DENY", "policy_section_id": "GLP-2.2", "sort_order": 3 }
+  ],
+  "gold_card_status": [
+    { "ordering_npi": "1477589632", "service_code": "72148", "window_start": "2025-10-01", "window_end": "2026-09-30", "total_requests": 42, "approved": 40, "approval_rate": 0.952, "threshold": 0.9, "status": "GOLD", "satisfied_pa_prefix": "GC-72148" },
+    { "ordering_npi": "1234567893", "service_code": "72148", "window_start": "2025-10-01", "window_end": "2026-09-30", "total_requests": 18, "approved": 15, "approval_rate": 0.833, "threshold": 0.9, "status": "NEAR", "satisfied_pa_prefix": null }
+  ]
+}

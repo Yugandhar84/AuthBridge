@@ -1,0 +1,181 @@
+{
+  "_comment": "Synthetic EHR data for the AuthBridge demo. No real patients. Used by the provider service (mock mode) and by snowflake/scripts/gen_seed_sql.py.",
+  "organization": {
+    "resourceType": "Organization",
+    "id": "org-lakeside",
+    "identifier": [{ "system": "http://hl7.org/fhir/sid/us-npi", "value": "1093817460" }],
+    "name": "Lakeside Family Medicine"
+  },
+  "practitioners": [
+    {
+      "practitioner_role_id": "pr-patel",
+      "practitioner_id": "prac-patel",
+      "npi": "1234567893",
+      "name": "Dr. Anita Patel",
+      "given": "Anita",
+      "family": "Patel",
+      "specialty": "Family medicine"
+    },
+    {
+      "practitioner_role_id": "pr-rao",
+      "practitioner_id": "prac-rao",
+      "npi": "1477589632",
+      "name": "Dr. Vikram Rao",
+      "given": "Vikram",
+      "family": "Rao",
+      "specialty": "Physical medicine and rehabilitation"
+    }
+  ],
+  "patients": [
+    {
+      "patient_id": "pt-001",
+      "mrn": "LFM-10021",
+      "given": "Maria",
+      "family": "Gonzalez",
+      "birth_date": "1968-04-12",
+      "gender": "female",
+      "city": "Columbus",
+      "state": "OH",
+      "problems": ["Obstructive sleep apnea (suspected)", "Obesity, BMI 34"],
+      "scenario": "CPAP – expect real-time approval",
+      "suggested_order": "E0601",
+      "suggested_reason": "G47.33",
+      "coverage": { "coverage_id": "cov-001", "member_id": "M100001", "plan_id": "DEMO-MA-01", "period_start": "2026-01-01", "period_end": "2026-12-31" }
+    },
+    {
+      "patient_id": "pt-002",
+      "mrn": "LFM-10022",
+      "given": "James",
+      "family": "Carter",
+      "birth_date": "1975-11-03",
+      "gender": "male",
+      "city": "Columbus",
+      "state": "OH",
+      "problems": ["Lumbar radiculopathy, left"],
+      "scenario": "Lumbar MRI – expect a pend for conservative care",
+      "suggested_order": "72148",
+      "suggested_reason": "M54.16",
+      "coverage": { "coverage_id": "cov-002", "member_id": "M100002", "plan_id": "DEMO-MA-01", "period_start": "2026-01-01", "period_end": "2026-12-31" }
+    },
+    {
+      "patient_id": "pt-003",
+      "mrn": "LFM-10023",
+      "given": "Linda",
+      "family": "Nguyen",
+      "birth_date": "1959-02-20",
+      "gender": "female",
+      "city": "Dublin",
+      "state": "OH",
+      "problems": ["Acute low back pain", "Suspected cauda equina syndrome"],
+      "scenario": "Lumbar MRI with red flags – expect approval",
+      "suggested_order": "72148",
+      "suggested_reason": "G83.4",
+      "coverage": { "coverage_id": "cov-003", "member_id": "M100003", "plan_id": "DEMO-MA-01", "period_start": "2026-01-01", "period_end": "2026-12-31" }
+    },
+    {
+      "patient_id": "pt-004",
+      "mrn": "LFM-10024",
+      "given": "Robert",
+      "family": "Hughes",
+      "birth_date": "1950-07-08",
+      "gender": "male",
+      "city": "Westerville",
+      "state": "OH",
+      "problems": ["COPD, GOLD 3", "Dyspnea on exertion"],
+      "scenario": "Home oxygen – expect clinician review",
+      "suggested_order": "E1390",
+      "suggested_reason": "J44.9",
+      "coverage": { "coverage_id": "cov-004", "member_id": "M100004", "plan_id": "DEMO-MA-01", "period_start": "2026-01-01", "period_end": "2026-12-31" }
+    },
+    {
+      "patient_id": "pt-005",
+      "mrn": "LFM-10025",
+      "given": "Susan",
+      "family": "Miller",
+      "birth_date": "1981-05-30",
+      "gender": "female",
+      "city": "Grandview",
+      "state": "OH",
+      "problems": ["Obesity, class III", "Prediabetes"],
+      "scenario": "GLP-1 continuation – expect clinician review",
+      "suggested_order": "SEMAGLUTIDE-2.4",
+      "suggested_reason": "E66.01",
+      "coverage": { "coverage_id": "cov-005", "member_id": "M100005", "plan_id": "DEMO-COMM-01", "period_start": "2026-01-01", "period_end": "2026-12-31" }
+    }
+  ],
+  "notes": [
+    {
+      "doc_id": "doc-001-1",
+      "patient_id": "pt-001",
+      "note_type": "Office visit",
+      "encounter_date": "2026-08-28",
+      "author_npi": "1234567893",
+      "title": "Sleep evaluation",
+      "text": "Face-to-face evaluation for suspected obstructive sleep apnea. Patient reports loud snoring, witnessed apneas and excessive daytime sleepiness. Epworth Sleepiness Scale score 14. BMI 34. Plan: attended in-lab polysomnography."
+    },
+    {
+      "doc_id": "doc-001-2",
+      "patient_id": "pt-001",
+      "note_type": "Sleep study",
+      "encounter_date": "2026-09-15",
+      "author_npi": "1477589632",
+      "title": "Polysomnography report",
+      "text": "Attended in-lab polysomnography performed on 2026-09-15. Total sleep time 6.1 hours. Apnea-hypopnea index (AHI) of 22 events per hour. Lowest oxygen saturation 84%. Impression: moderate obstructive sleep apnea. Recommend CPAP therapy."
+    },
+    {
+      "doc_id": "doc-002-1",
+      "patient_id": "pt-002",
+      "note_type": "Office visit",
+      "encounter_date": "2026-08-25",
+      "author_npi": "1234567893",
+      "title": "Back pain visit",
+      "text": "Low back pain radiating to the left leg for 2 weeks after lifting a heavy box. Started naproxen 500 mg twice daily and referred to physical therapy. No bowel or bladder changes. No saddle anesthesia. Strength 5/5 bilaterally, positive straight-leg raise on the left."
+    },
+    {
+      "doc_id": "doc-002-2",
+      "patient_id": "pt-002",
+      "note_type": "Office visit",
+      "encounter_date": "2026-09-15",
+      "author_npi": "1234567893",
+      "title": "Back pain follow-up",
+      "text": "Follow-up for lumbar radiculopathy. Radicular pain persists after 3 weeks of naproxen and home exercises. Physical therapy started on 2026-09-02. Neurological exam unchanged. Discussed MRI lumbar spine."
+    },
+    {
+      "doc_id": "doc-002-3",
+      "patient_id": "pt-002",
+      "note_type": "Physical therapy",
+      "encounter_date": "2026-10-14",
+      "author_npi": "1093817460",
+      "title": "Physical therapy re-evaluation",
+      "attach_on_request": true,
+      "text": "Physical therapy re-evaluation. Patient completed 6 weeks of supervised physical therapy between 2026-09-02 and 2026-10-14, in addition to NSAIDs. Radicular symptoms persist with limited progress. Recommend imaging and specialist review."
+    },
+    {
+      "doc_id": "doc-003-1",
+      "patient_id": "pt-003",
+      "note_type": "Urgent care",
+      "encounter_date": "2026-10-16",
+      "author_npi": "1477589632",
+      "title": "Urgent evaluation",
+      "text": "Acute low back pain for 5 days. New saddle anesthesia and urinary retention requiring catheterization. Decreased rectal tone on exam. Concern for cauda equina syndrome. Urgent MRI lumbar spine requested."
+    },
+    {
+      "doc_id": "doc-004-1",
+      "patient_id": "pt-004",
+      "note_type": "Pulmonology visit",
+      "encounter_date": "2026-10-02",
+      "author_npi": "1234567893",
+      "title": "COPD follow-up",
+      "text": "COPD, GOLD 3, with progressive dyspnea on exertion. Resting room-air SpO2 92%. Six-minute walk test on room air: lowest SpO2 90%. Overnight oximetry: nadir SpO2 91%, no time below 88%. Patient requests home oxygen for breathlessness."
+    },
+    {
+      "doc_id": "doc-005-1",
+      "patient_id": "pt-005",
+      "note_type": "Office visit",
+      "encounter_date": "2026-10-10",
+      "author_npi": "1234567893",
+      "title": "Weight management follow-up",
+      "text": "Weight management follow-up. Patient has completed 12 weeks at the semaglutide 2.4 mg weekly maintenance dose. Weight 108.5 kg from a baseline of 112.0 kg (3.1% loss). Tolerating medication with mild nausea. Requests continuation."
+    }
+  ]
+}

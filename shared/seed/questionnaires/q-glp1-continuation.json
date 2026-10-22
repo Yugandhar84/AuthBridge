@@ -1,0 +1,108 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "q-glp1-continuation",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/us/davinci-dtr/StructureDefinition/dtr-std-questionnaire"
+    ]
+  },
+  "url": "https://authbridge.example/fhir/Questionnaire/q-glp1-continuation",
+  "version": "1.0.0",
+  "name": "GLP1Continuation",
+  "title": "GLP-1 continuation \u2013 documentation",
+  "status": "active",
+  "publisher": "Demo Health Plan (synthetic)",
+  "date": "2026-10-01",
+  "extension": [
+    {
+      "url": "https://authbridge.example/fhir/StructureDefinition/policy-doc-id",
+      "valueString": "POL-DEMO-GLP1-v1"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "patient",
+      "type": "group",
+      "text": "Patient and order",
+      "item": [
+        {
+          "linkId": "patient_name",
+          "type": "string",
+          "text": "Patient name",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%patient.name.first().given.first() + ' ' + %patient.name.first().family"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "patient_birth_date",
+          "type": "date",
+          "text": "Date of birth",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%patient.birthDate"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "member_id",
+          "type": "string",
+          "text": "Member ID",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%coverage.subscriberId"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "order_code",
+          "type": "string",
+          "text": "Requested service code",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%orderCode"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "criteria",
+      "type": "group",
+      "text": "Clinical documentation",
+      "item": [
+        {
+          "linkId": "weeks_at_maintenance",
+          "type": "integer",
+          "text": "Weeks completed at the maintenance dose"
+        },
+        {
+          "linkId": "weight_loss_pct",
+          "type": "decimal",
+          "text": "Weight loss from baseline (%)"
+        }
+      ]
+    }
+  ]
+}

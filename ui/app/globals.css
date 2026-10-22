@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AuthBridge tokens: cool clinical ink on white. Status colours follow the
+   X12 review-action outcomes so the same colour means the same thing on the
+   clinic and health-plan sides. */
+:root {
+  --ink: #1d2a38;
+  --ink-soft: #52637a;
+  --paper: #ffffff;
+  --wash: #eef2f5;
+  --rule: #d3dce3;
+  --accent: #2a5c86;
+  --accent-soft: #e3edf5;
+  --ok: #1e7a4c;
+  --pend: #9a620f;
+  --review: #6a4c9c;
+  --deny: #b42318;
+  --gold: #8a6a14;
+  --neutral: #4d6a80;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e4ebf2;
+    --ink-soft: #9fb0c3;
+    --paper: #131b24;
+    --wash: #1b2633;
+    --rule: #2e3c4c;
+    --accent: #7fb0dc;
+    --accent-soft: #1f3247;
+    --ok: #5cc28f;
+    --pend: #e3a74a;
+    --review: #b39ae0;
+    --deny: #f0806f;
+    --gold: #d8b551;
+    --neutral: #92aec3;
+    color-scheme: dark;
+  }
+}
+
+html, body { background: var(--paper); color: var(--ink); }
+body { font-family: "Public Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary { @apply btn bg-accent text-paper hover:opacity-90; }
+  .btn-quiet { @apply btn border border-rule bg-paper text-ink hover:bg-wash; }
+  .btn-danger { @apply btn border border-deny bg-paper text-deny hover:bg-wash; }
+  .field-label { @apply mb-1 block text-sm font-medium text-ink; }
+  .field {
+    @apply w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft;
+  }
+  .panel { @apply rounded-lg border border-rule bg-paper; }
+  .doc-text { @apply font-serif text-[15.5px] leading-[1.65]; }
+  .mark-quote { background: color-mix(in srgb, var(--pend) 18%, transparent); border-radius: 2px; padding: 0 1px; }
+}

@@ -1,0 +1,113 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "q-pap-initial",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/us/davinci-dtr/StructureDefinition/dtr-std-questionnaire"
+    ]
+  },
+  "url": "https://authbridge.example/fhir/Questionnaire/q-pap-initial",
+  "version": "1.0.0",
+  "name": "PAPInitial",
+  "title": "CPAP initial coverage \u2013 documentation",
+  "status": "active",
+  "publisher": "Demo Health Plan (synthetic)",
+  "date": "2026-10-01",
+  "extension": [
+    {
+      "url": "https://authbridge.example/fhir/StructureDefinition/policy-doc-id",
+      "valueString": "POL-DEMO-PAP-v1"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "patient",
+      "type": "group",
+      "text": "Patient and order",
+      "item": [
+        {
+          "linkId": "patient_name",
+          "type": "string",
+          "text": "Patient name",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%patient.name.first().given.first() + ' ' + %patient.name.first().family"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "patient_birth_date",
+          "type": "date",
+          "text": "Date of birth",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%patient.birthDate"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "member_id",
+          "type": "string",
+          "text": "Member ID",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%coverage.subscriberId"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "order_code",
+          "type": "string",
+          "text": "Requested service code",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%orderCode"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "linkId": "criteria",
+      "type": "group",
+      "text": "Clinical documentation",
+      "item": [
+        {
+          "linkId": "f2f_before_sleep_test",
+          "type": "boolean",
+          "text": "Was a face-to-face clinical evaluation done before the sleep test?"
+        },
+        {
+          "linkId": "ahi",
+          "type": "decimal",
+          "text": "Apnea-hypopnea index (AHI) from the sleep test, events per hour"
+        },
+        {
+          "linkId": "qualifying_symptom",
+          "type": "boolean",
+          "text": "Does the patient have excessive daytime sleepiness or another qualifying symptom or comorbidity?"
+        }
+      ]
+    }
+  ]
+}

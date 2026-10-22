@@ -1,0 +1,43 @@
+# AuthBridge local stack: UI + provider (EHR simulator) + payer services.
+# All data, rules and AI live in Snowflake when AUTHBRIDGE_BACKEND=snowflake;
+# with the defaults (mock) everything runs offline on synthetic seed data.
+#
+#   cp .env.example .env      # then edit
+#   docker compose up --build
+#   open http://localhost:3000
+services:
+  payer:
+    build: { context: ., dockerfile: services/Dockerfile, args: { SERVICE: payer } }
+    env_file: .env
+    environment:
+      SERVICE: payer
+      PORT: "8002"
+      PAYER_PUBLIC_URL: http://localhost:8002
+    volumes:
+      - ./secrets:/secrets:ro          # Snowflake private keys (git-ignored)
+    ports: ["8002:8002"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health')"]
+      interval: 10s
+      retries: 5
+
+  provider:
+    build: { context: ., dockerfile: services/Dockerfile, args: { SERVICE: provider } }
+    env_file: .env
+    environment:
+      SERVICE: provider
+      PORT: "8001"
+      PAYER_BASE_URL: http://payer:8002
+      PROVIDER_CALLBACK_URL: http://provider:8001   # where the payer sends PAS notifications
+    volumes:
+      - ./secrets:/secrets:ro
+    ports: ["8001:8001"]
+    depends_on:
+      payer: { condition: service_healthy }
+
+  ui:
+    build:
+      context: ./ui
+      args: { PROVIDER_URL: "http://provider:8001", PAYER_URL: "http://payer:8002" }
+    ports: ["3000:3000"]
+    depends_on: [provider, payer]
